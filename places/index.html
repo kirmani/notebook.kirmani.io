@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Retrieving Autocomplete Predictions</title>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&v=3.exp"></script>
+<script>
+// This example retrieves autocomplete predictions programmatically
+// from the autocomplete service, and displays them as an HTML list.
+// The predictions will include a mix of places (as defined by the
+// Google Places API) and suggested search terms.
+
+function initialize() {
+  var service = new google.maps.places.AutocompleteService();
+  service.getQueryPredictions({ input: 'Buy milk' }, callback);
+}
+
+function callback(predictions, status) {
+  if (status != google.maps.places.PlacesServiceStatus.OK) {
+    alert(status);
+    return;
+  }
+
+  var results = document.getElementById('results');
+
+  for (var i = 0, prediction; prediction = predictions[i]; i++) {
+    results.innerHTML += '<li>' + prediction.description + '</li>';
+  }
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
+
+</head>
+<body>
+  <p>Query suggestions for 'pizza near':</p>
+  <ul id="results"></ul>
+</body>
+</html>
